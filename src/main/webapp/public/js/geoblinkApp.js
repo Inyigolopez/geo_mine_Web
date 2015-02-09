@@ -1,5 +1,31 @@
-angular.module('geoblinkApp', []).controller('indexCtrl', function($scope, $http) {
-	$http.get('/resource/').success(function(data) {
+angular.module('geoblinkApp', [
+    'ngRoute',
+    'importDataController',
+    'dataTableController',
+    'mapController'
+    ])
+
+    .config(['$routeProvider', function($routeProvider) {
+        $routeProvider
+            .when('/imporData', {
+                templateUrl: 'views/partials/importData.html',
+                controller: 'ImportDataCtrl'
+            })
+            .when('/data', {
+                templateUrl: 'views/partials/data.html',
+                controller: 'DataTableCtrl'
+            })
+            .when('/map', {
+                templateUrl: 'views/partials/map.html',
+                controller: 'MapCtrl'
+            })
+            .otherwise({
+                redirectTo: '/'
+            });
+    }])
+
+    .controller('indexCtrl', function($scope, $http) {
+	   $http.get('/resource/').success(function(data) {
 		$scope.greeting = data;
 		
 
